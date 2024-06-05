@@ -26,6 +26,18 @@ const Colors = () => {
     fetchColors();
   }, []);
 
+  const filterColors = (input: string) => {
+    const query = input.toLowerCase();
+    setSearchInput(input);
+
+    const newFilteredColors = colors.filter(
+      (color) =>
+        color.name.toLowerCase().includes(query) ||
+        color.hex.toLowerCase().includes(query)
+    );
+    setFilteredColors(newFilteredColors);
+  };
+
   const fetchColors = async () => {
     try {
       const colorsList = await getColors();
@@ -45,13 +57,7 @@ const Colors = () => {
         flexDirection={{ base: 'column', md: 'row' }}
       >
         <AddColor setSearchInput={setSearchInput} />
-        <SearchColors
-          filteredColors={filteredColors}
-          colors={colors}
-          setFilteredColors={setFilteredColors}
-          searchInput={searchInput}
-          setSearchInput={setSearchInput}
-        />
+        <SearchColors filterColors={filterColors} searchInput={searchInput} />
       </Flex>
       <Divider height="30px" marginBottom="30px" borderBottomWidth="5px" />
       <ColorsList colors={filteredColors} />

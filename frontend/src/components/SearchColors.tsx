@@ -1,34 +1,14 @@
 import { Flex, FormLabel, Input } from '@chakra-ui/react';
-import { Color } from './Colors';
-import { Dispatch, SetStateAction } from 'react';
 
 interface SearchColorsProps {
-  filteredColors: Color[];
-  colors: Color[];
   searchInput: string;
-  setFilteredColors: Dispatch<SetStateAction<Color[]>>;
-  setSearchInput: Dispatch<SetStateAction<string>>;
+  filterColors: (input: string) => void;
 }
 
 const SearchColors: React.FC<SearchColorsProps> = ({
-  filteredColors,
-  colors,
   searchInput,
-  setFilteredColors,
-  setSearchInput
+  filterColors
 }) => {
-  const filterColors = (input: string) => {
-    const query = input.toLowerCase();
-    setSearchInput(input);
-
-    filteredColors = colors.filter(
-      (color) =>
-        color.name.toLowerCase().includes(query) ||
-        color.hex.toLowerCase().includes(query)
-    );
-    setFilteredColors(filteredColors);
-  };
-
   return (
     <Flex
       justifyContent="center"
